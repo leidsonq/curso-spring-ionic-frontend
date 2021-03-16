@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { connectableObservableDescriptor } from 'rxjs/observable/ConnectableObservable';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeService } from '../../services/domain/cidade.service';
+import { ClienteService } from '../../services/domain/cliente.service';
 import { EstadoService } from '../../services/domain/estado.service';
 
 @IonicPage()
@@ -23,17 +24,19 @@ export class SignapPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
 
       this.formGroup = formBuilder.group({
         nome: ['Leidson', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
         email: ['leidson@gmail.com', [Validators.required, Validators.email]], 
-        tipo: ['2', [Validators.required]],
-        cpfOrCnpf: ['76566580093',[Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+        tipo: ['1', [Validators.required]],
+        cpfOuCnpj: ['76566580093',[Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
         senha: ['abc', [Validators.required]],
         logradouro: ['Rua Pj', [Validators.required]],
         numero: ['55-b',[Validators.required]],
-        complemtno: ['Apt-05', []],
+        complemento: ['Apt-05', []],
         bairro: ['Centro', [Validators.required]],
         cep: ['74.666-000', [Validators.required]],
         telefone1: ['62-90000-8965',[Validators.required]],
@@ -67,7 +70,27 @@ export class SignapPage {
     }
 
   signupUser(){
-    console.log("Enviou o form");
+    console.log(this.formGroup.value);
+    this.clienteService.insert(this.formGroup.value)
+      .subscribe(response =>{
+        this.showInsertOk();
+      },
+      error => {});
+  }
+
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
+      enableBackdropDismiss: false,
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          this.navCtrl.pop();
+        }
+      }]
+    });
+    alert.present();
   }
 
 }

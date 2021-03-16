@@ -26,19 +26,19 @@
      </ion-list-header>
      <ion-item>
        <ion-label>Pessoa Física</ion-label>
-       <ion-radio checked="true" value="2"></ion-radio>
+       <ion-radio checked="true" value="1"></ion-radio>
      </ion-item>
      <ion-item>
       <ion-label>Pessoa Jurídica</ion-label>
-      <ion-radio value="1"></ion-radio>
+      <ion-radio value="2"></ion-radio>
     </ion-item>     
    </ion-list>
 
    <ion-item>
     <ion-label stacked>CPF ou CNPJ</ion-label>
-    <ion-input  formControlName="cpfOrCnpf" type="text"></ion-input>
+    <ion-input  formControlName="cpfOuCnpj" type="text"></ion-input>
   </ion-item>
-  <p class="danger" *ngIf="formGroup.controls.cpfOrCnpf.dirty && formGroup.controls.cpfOrCnpf.errors">Valor inválido</p>
+  <p class="danger" *ngIf="formGroup.controls.cpfOuCnpj.dirty && formGroup.controls.cpfOuCnpj.errors">Valor inválido</p>
 
   <ion-item>
     <ion-label stacked>Senha</ion-label>
@@ -60,7 +60,7 @@
 
   <ion-item>
     <ion-label stacked>Complemento</ion-label>
-    <ion-input  formControlName="complemtno" type="text"></ion-input>
+    <ion-input  formControlName="complemento" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
